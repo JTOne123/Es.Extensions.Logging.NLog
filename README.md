@@ -14,4 +14,4 @@ Add dependency in project.json
 ## 例子
 ---
 
-请查看[Sample](https://github.com/NLog/NLog.Extensions.Logging/tree/dev/src/Sample)工程使用，easy work!
+请查看[Sample](https://github.com/NLog/NLog.Extensions.Logging/tree/master/src/Sample)工程使用，easy work!
