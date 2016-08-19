@@ -1,0 +1,35 @@
+﻿{
+  "name": "Es.Extensions.Logging.NLog",
+  "version": "1.0.0",
+  "title": "Es.Extensions.Logging.NLog",
+  "description": "NLog provider for Microsoft.Extensions.Logging",
+  "authors": [ "v.la@live.cn" ],
+  "packOptions": {
+    "owners": [ "v.la@live.cn" ],
+    "tags": [ "logging", "log", "logger" ],
+    "projectUrl": "https://github.com/vla/Es.Extensions.Logging.NLog",
+    "licenseUrl": "https://github.com/vla/Es.Extensions.Logging.NLog/blob/master/LICENSE",
+    "requireLicenseAcceptance": false,
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/vla/Es.Extensions.Logging.NLog"
+    }
+  },
+  "buildOptions": {
+    "debugType": "portable",
+    "warningsAsErrors": true,
+    "keyFile": "../Es.snk"
+  },
+  "dependencies": {
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0-*",
+    "NLog": "4.4.0-*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+    },
+    "netstandard1.6": {
+    }
+  }
+}
