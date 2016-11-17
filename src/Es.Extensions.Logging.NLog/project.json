@@ -1,6 +1,6 @@
 ﻿{
   "name": "Es.Extensions.Logging.NLog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "title": "Es.Extensions.Logging.NLog",
   "description": "NLog provider for Microsoft.Extensions.Logging",
   "authors": [ "v.la@live.cn" ],
@@ -21,13 +21,13 @@
     "keyFile": "../Es.snk"
   },
   "dependencies": {
-    "Microsoft.AspNetCore.Hosting.Abstractions": "1.0.0-*",
-    "Microsoft.Extensions.Logging.Abstractions": "1.0.0-*",
-    "NLog": "4.4.0-*"
+    "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.0-*",
+    "Microsoft.Extensions.Logging.Abstractions": "1.1.0-*",
+    "NLog": "5.0.0-*"
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
+    "netstandard1.3": {
     },
     "netstandard1.6": {
     }
