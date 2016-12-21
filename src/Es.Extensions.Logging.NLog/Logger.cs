@@ -6,6 +6,9 @@ using NLogger = NLog;
 
 namespace Es.Extensions.Logging.NLog
 {
+    /// <summary>
+    ///  Implement NLog's Logger in a Microsoft.Extensions.Logging's interface <see cref="Microsoft.Extensions.Logging.ILogger"/>.
+    /// </summary>
     internal class Logger : ILogger
     {
         private NLogger.Logger _logger;
@@ -29,33 +32,22 @@ namespace Es.Extensions.Logging.NLog
             return _logger.IsEnabled(logLevel);
         }
 
-        public void Log(LogLevel logLevel, string message, Exception exception) {
-            if (string.IsNullOrEmpty(message) && exception == null)
-                return;
-
-            var eventInfo = NLogger.LogEventInfo.Create(
-                GetLogLevel(logLevel),
-                _logger.Name,
-                exception,
-                CultureInfo.CurrentCulture,
-                message);
-
-            _logger.Log(eventInfo);
-        }
-
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) {
-            if (formatter == null) {
-                throw new ArgumentNullException(nameof(formatter));
-            }
-
-            var message = formatter(state, exception);
-            if (string.IsNullOrEmpty(message) && exception == null)
-                return;
-
             var nLogLevel = GetLogLevel(logLevel);
+
             if (IsEnabled(nLogLevel)) {
+
+                if (formatter == null) {
+                    throw new ArgumentNullException(nameof(formatter));
+                }
+
+                var message = formatter(state, exception);
+
+                if (string.IsNullOrEmpty(message))
+                    return;
+
                 var eventInfo = NLogger.LogEventInfo.Create(
-                      GetLogLevel(logLevel),
+                      nLogLevel,
                       _logger.Name,
                       exception,
                       CultureInfo.CurrentCulture,
@@ -75,7 +67,8 @@ namespace Es.Extensions.Logging.NLog
                 case LogLevel.Warning: return NLogger.LogLevel.Warn;
                 case LogLevel.Error: return NLogger.LogLevel.Error;
                 case LogLevel.Critical: return NLogger.LogLevel.Fatal;
-                default: return NLogger.LogLevel.Off;
+                case LogLevel.None: return NLogger.LogLevel.Off;
+                default: return NLogger.LogLevel.Debug;
             }
         }
     }

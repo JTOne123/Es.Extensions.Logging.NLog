@@ -8,11 +8,22 @@ namespace Microsoft.Extensions.Logging
 {
     public static class NLogLoggerFactoryExtensions
     {
+        /// <summary>
+        /// Enable NLog as logging provider in ASP.NET Core.
+        /// </summary>
+        /// <param name="factory"></param>
+        /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
+        /// <returns></returns>
         public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory) {
             factory.AddProvider(new NLogLoggerProvider(logFactory));
             return factory;
         }
 
+        /// <summary>
+        /// Enable NLog as logging provider in ASP.NET Core.
+        /// </summary>
+        /// <param name="factory"></param>
+        /// <returns></returns>
         public static ILoggerFactory AddNLog(this ILoggerFactory factory) {
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging")));
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Abstractions")));
@@ -26,6 +37,11 @@ namespace Microsoft.Extensions.Logging
             return factory;
         }
 
+        /// <summary>
+        /// Apply NLog configuration from XML config.
+        /// </summary>
+        /// <param name="env"></param>
+        /// <param name="configFileRelativePath">relative path to NLog configuration file.</param>
         public static void ConfigureNLog(this IHostingEnvironment env, string configFileRelativePath) {
             var fileName = Path.Combine(env.ContentRootPath, configFileRelativePath);
             ConfigureNLog(fileName);
