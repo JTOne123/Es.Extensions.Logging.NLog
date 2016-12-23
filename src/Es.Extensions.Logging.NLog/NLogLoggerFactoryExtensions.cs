@@ -6,6 +6,9 @@ using NLogger = NLog;
 
 namespace Microsoft.Extensions.Logging
 {
+    /// <summary>
+    /// NLogLoggerFactoryExtensions
+    /// </summary>
     public static class NLogLoggerFactoryExtensions
     {
         /// <summary>

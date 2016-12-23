@@ -17,6 +17,7 @@
   },
   "buildOptions": {
     "debugType": "portable",
+    "xmlDoc": true,
     "warningsAsErrors": true,
     "keyFile": "../Es.snk"
   },
