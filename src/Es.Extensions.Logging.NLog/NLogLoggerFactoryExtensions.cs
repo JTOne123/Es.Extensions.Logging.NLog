@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using Es.Extensions.Logging.NLog;
 using Microsoft.AspNetCore.Hosting;
@@ -52,6 +53,44 @@ namespace Microsoft.Extensions.Logging
 
         private static void ConfigureNLog(string fileName) {
             NLogger.LogManager.Configuration = new NLogger.Config.XmlLoggingConfiguration(fileName, true);
+        }
+
+        /// <summary>
+        /// Errors the specified message.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="message">The message.</param>
+        public static void Error(this ILogger logger, string message) {
+            logger.LogError(0, message);
+        }
+
+        /// <summary>
+        /// Errors the specified format.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="args">The arguments.</param>
+        public static void Error(this ILogger logger, string format, params object[] args) {
+            logger.LogError(0, format, args);
+        }
+
+        /// <summary>
+        /// Errors the specified message.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="error">The error.</param>
+        public static void Error(this ILogger logger, string message, Exception error) {
+            logger.LogError(0, error, message);
+        }
+
+        /// <summary>
+        /// Errors the specified error.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="error">The error.</param>
+        public static void Error(this ILogger logger, Exception error) {
+            logger.LogError(0, error, error.Message);
         }
     }
 }
