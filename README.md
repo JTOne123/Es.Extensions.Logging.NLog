@@ -4,10 +4,10 @@ NLog provider for Microsoft.Extensions.Logging; .NET Core and ASP.NET Core.
 
 ## 如何使用
 ---
-Add dependency in project.json 
+Add dependency in project.json
 ```xml
 "dependencies": {
-   "Es.Extensions.Logging.NLog": "1.0.2"
+   "Es.Extensions.Logging.NLog": "1.0.3"
  }
 ```
 
