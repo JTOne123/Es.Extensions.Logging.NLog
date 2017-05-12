@@ -28,7 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.1" />
-    <PackageReference Include="NLog" Version="5.0.0-*" />
+    <PackageReference Include="NLog" Version="5.0.0-beta07" />
   </ItemGroup>
 
 </Project>
