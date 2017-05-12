@@ -18,7 +18,8 @@ namespace Microsoft.Extensions.Logging
         /// <param name="factory"></param>
         /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
         /// <returns></returns>
-        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory) {
+        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory)
+        {
             factory.AddProvider(new NLogLoggerProvider(logFactory));
             return factory;
         }
@@ -28,14 +29,22 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="factory"></param>
         /// <returns></returns>
-        public static ILoggerFactory AddNLog(this ILoggerFactory factory) {
+        public static ILoggerFactory AddNLog(this ILoggerFactory factory)
+        {
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging")));
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Abstractions")));
-            NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Console")));
-            NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Debug")));
+            try
+            {
+                var filterAssembly = Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Filter"));
+                NLogger.LogManager.AddHiddenAssembly(filterAssembly);
+            }
+            catch (Exception)
+            {
+            }
             NLogger.LogManager.AddHiddenAssembly(typeof(Logger).GetTypeInfo().Assembly);
 
-            using (var provider = new NLogLoggerProvider()) {
+            using (var provider = new NLogLoggerProvider())
+            {
                 factory.AddProvider(provider);
             }
             return factory;
@@ -44,15 +53,28 @@ namespace Microsoft.Extensions.Logging
         /// <summary>
         /// Apply NLog configuration from XML config.
         /// </summary>
-        /// <param name="env"></param>
-        /// <param name="configFileRelativePath">relative path to NLog configuration file.</param>
-        public static void ConfigureNLog(this IHostingEnvironment env, string configFileRelativePath) {
-            var fileName = Path.Combine(env.ContentRootPath, configFileRelativePath);
-            ConfigureNLog(fileName);
+        /// <param name="factory"></param>
+        /// <param name="fileName">NLog configuration file.</param>
+        public static NLogger.Config.LoggingConfiguration ConfigureNLog(this ILoggerFactory factory, string fileName)
+        {
+            return ConfigureNLog(fileName);
         }
 
-        private static void ConfigureNLog(string fileName) {
+        /// <summary>
+        /// Apply NLog configuration from XML config.
+        /// </summary>
+        /// <param name="env"></param>
+        /// <param name="configFileRelativePath">relative path to NLog configuration file.</param>
+        public static NLogger.Config.LoggingConfiguration ConfigureNLog(this IHostingEnvironment env, string configFileRelativePath)
+        {
+            var fileName = Path.Combine(env.ContentRootPath, configFileRelativePath);
+            return ConfigureNLog(fileName);
+        }
+
+        private static NLogger.Config.LoggingConfiguration ConfigureNLog(string fileName)
+        {
             NLogger.LogManager.Configuration = new NLogger.Config.XmlLoggingConfiguration(fileName, true);
+            return NLogger.LogManager.Configuration;
         }
 
         /// <summary>
@@ -60,7 +82,8 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="message">The message.</param>
-        public static void Error(this ILogger logger, string message) {
+        public static void Error(this ILogger logger, string message)
+        {
             logger.LogError(0, message);
         }
 
@@ -70,7 +93,8 @@ namespace Microsoft.Extensions.Logging
         /// <param name="logger">The logger.</param>
         /// <param name="format">The format.</param>
         /// <param name="args">The arguments.</param>
-        public static void Error(this ILogger logger, string format, params object[] args) {
+        public static void Error(this ILogger logger, string format, params object[] args)
+        {
             logger.LogError(0, format, args);
         }
 
@@ -80,7 +104,8 @@ namespace Microsoft.Extensions.Logging
         /// <param name="logger">The logger.</param>
         /// <param name="message">The message.</param>
         /// <param name="error">The error.</param>
-        public static void Error(this ILogger logger, string message, Exception error) {
+        public static void Error(this ILogger logger, string message, Exception error)
+        {
             logger.LogError(0, error, message);
         }
 
@@ -89,8 +114,53 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="error">The error.</param>
-        public static void Error(this ILogger logger, Exception error) {
+        public static void Error(this ILogger logger, Exception error)
+        {
             logger.LogError(0, error, error.Message);
+        }
+
+
+
+        /// <summary>
+        /// Warn the specified message.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="message">The message.</param>
+        public static void Warn(this ILogger logger, string message)
+        {
+            logger.LogWarning(0, message);
+        }
+
+        /// <summary>
+        /// Warn the specified format.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="format">The format.</param>
+        /// <param name="args">The arguments.</param>
+        public static void Warn(this ILogger logger, string format, params object[] args)
+        {
+            logger.LogWarning(0, format, args);
+        }
+
+        /// <summary>
+        /// Warn the specified message.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="exception">The exception.</param>
+        public static void Warn(this ILogger logger, string message, Exception exception)
+        {
+            logger.LogWarning(0, exception, message);
+        }
+
+        /// <summary>
+        /// Warn the specified error.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="exception">The exception.</param>
+        public static void Warn(this ILogger logger, Exception exception)
+        {
+            logger.LogWarning(0, exception, exception.Message);
         }
     }
 }
