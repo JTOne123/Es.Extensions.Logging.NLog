@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      autoReload="true">
+
+  <targets>
+
+    <target xsi:type="Console"
+           name="stdout"
+           layout="[${longdate}] ${lowercase:${level}} ${logger} ${message} ${exception:format=ToString}" />
+
+    <target name="allfile"
+            xsi:type="File"
+            encoding="utf-8"
+            archiveFileName="${basedir}/logs/archives/${level}/${shortdate}/{#}.log"
+            archiveEvery="Day"
+            maxArchiveFiles="10"
+            archiveNumbering="Date"
+            archiveAboveSize="31457280"
+            archiveDateFormat="HH_mm_ss_fff"
+            concurrentWrites="true"
+            keepFileOpen="false"
+            fileName="${basedir}/logs/${level}/${shortdate}.log"
+            layout="[${longdate}] ${lowercase:${level}} ${logger} ${message} ${exception:format=ToString}" />
+
+    <target xsi:type="Null" name="blackhole" />
+  </targets>
+
+  <rules>
+    <logger name="Microsoft.*" minlevel="Trace" writeTo="blackhole" final="true" />
+    <logger name="*" minlevel="Debug" writeTo="stdout" />
+    <logger name="*" minlevel="Debug" writeTo="allfile" />
+  </rules>
+</nlog>

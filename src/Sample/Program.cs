@@ -16,10 +16,36 @@ namespace Sample
 
             var provider = serviceCollection.BuildServiceProvider();
 
-            sample(provider.GetService<ILoggerFactory>());
+            //sample(provider.GetService<ILoggerFactory>());
+
+            fileload(provider.GetService<ILoggerFactory>());
 
             Console.WriteLine("done.");
             Console.Read();
+        }
+
+        static void fileload(ILoggerFactory logFactory)
+        {
+            var filename = AppContext.BaseDirectory + "/nlog.xml";
+
+            logFactory.ConfigureNLog(filename);
+
+            Console.WriteLine("Targets:" + NLog.LogManager.Configuration.AllTargets.Count);
+
+            logFactory.AddNLog();
+
+            var log = logFactory.CreateLogger("ConsoleDemo");
+
+            log.LogTrace("Trace....");
+            log.LogError("Verbose...");
+            log.LogInformation("Information....");
+            log.LogError("Error...");
+            log.LogWarning("Warning...");
+            log.LogCritical("Fatal...");
+
+            var exception = new InvalidOperationException("Invalid value");
+
+            log.LogError(0, exception, exception.Message);
         }
 
 
