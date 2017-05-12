@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>NLog provider for Microsoft.Extensions.Logging</Description>
     <AssemblyTitle>Es.Extensions.Logging.NLog</AssemblyTitle>
-    <VersionPrefix>1.0.3</VersionPrefix>
+    <VersionPrefix>1.0.4</VersionPrefix>
     <Authors>v.la@live.cn</Authors>
     <TargetFrameworks>netstandard1.3;netstandard1.6</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -19,7 +19,7 @@
     <PackageLicenseUrl>https://github.com/vla/Es.Extensions.Logging.NLog/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>http://s.gravatar.com/avatar/28dfa5190889f7190e74b683fc30b827?s=80</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/vla/Es.Extensions.Logging.NLog</RepositoryUrl>
+    <RepositoryUrl>https://github.com/vla/Es.Extensions.Logging.NLog</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
