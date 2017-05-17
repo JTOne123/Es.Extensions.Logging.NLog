@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.Logging
         /// <param name="factory"></param>
         /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
         /// <returns></returns>
-        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory)
+        public static LoggerFactory AddNLog(this LoggerFactory factory, NLogger.LogFactory logFactory)
         {
             factory.AddProvider(new NLogLoggerProvider(logFactory));
             return factory;
@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="factory"></param>
         /// <returns></returns>
-        public static ILoggerFactory AddNLog(this ILoggerFactory factory)
+        public static LoggerFactory AddNLog(this LoggerFactory factory)
         {
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging")));
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Abstractions")));
@@ -55,7 +55,7 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="factory"></param>
         /// <param name="fileName">NLog configuration file.</param>
-        public static NLogger.Config.LoggingConfiguration ConfigureNLog(this ILoggerFactory factory, string fileName)
+        public static NLogger.Config.LoggingConfiguration ConfigureNLog(this LoggerFactory factory, string fileName)
         {
             return ConfigureNLog(fileName);
         }
@@ -118,8 +118,6 @@ namespace Microsoft.Extensions.Logging
         {
             logger.LogError(0, error, error.Message);
         }
-
-
 
         /// <summary>
         /// Warn the specified message.

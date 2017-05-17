@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Config;
@@ -9,22 +8,17 @@ namespace Sample
 {
     public class Program
     {
-        public static void Main(string[] args) {
-            var serviceCollection = new ServiceCollection();
+        public static void Main(string[] args)
+        {
+            var logFactory = new LoggerFactory();
 
-            serviceCollection.AddSingleton<ILoggerFactory, LoggerFactory>();
-
-            var provider = serviceCollection.BuildServiceProvider();
-
-            //sample(provider.GetService<ILoggerFactory>());
-
-            fileload(provider.GetService<ILoggerFactory>());
+            Fileload(logFactory);
 
             Console.WriteLine("done.");
             Console.Read();
         }
 
-        static void fileload(ILoggerFactory logFactory)
+        private static void Fileload(LoggerFactory logFactory)
         {
             var filename = AppContext.BaseDirectory + "/nlog.xml";
 
@@ -48,9 +42,8 @@ namespace Sample
             log.LogError(0, exception, exception.Message);
         }
 
-
-        static void sample(ILoggerFactory logFactory) {
-
+        private static void Sample(LoggerFactory logFactory)
+        {
             Console.WriteLine("=============== sample ==================");
 
             LoggingConfiguration config = new LoggingConfiguration();
@@ -75,6 +68,5 @@ namespace Sample
 
             log.LogError(0, exception, exception.Message);
         }
-
     }
 }

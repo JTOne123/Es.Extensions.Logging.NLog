@@ -13,31 +13,38 @@ namespace Es.Extensions.Logging.NLog
     {
         private NLogger.Logger _logger;
 
-        public Logger(NLogger.Logger logger) {
+        public Logger(NLogger.Logger logger)
+        {
             _logger = logger;
         }
 
-        public IDisposable BeginScope<TState>(TState state) {
-            if (state == null) {
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            if (state == null)
+            {
                 throw new ArgumentNullException(nameof(state));
             }
             return NLogger.NestedDiagnosticsContext.Push(state);
         }
 
-        public bool IsEnabled(LogLevel logLevel) {
+        public bool IsEnabled(LogLevel logLevel)
+        {
             return _logger.IsEnabled(GetLogLevel(logLevel));
         }
 
-        private bool IsEnabled(NLogger.LogLevel logLevel) {
+        private bool IsEnabled(NLogger.LogLevel logLevel)
+        {
             return _logger.IsEnabled(logLevel);
         }
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) {
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
             var nLogLevel = GetLogLevel(logLevel);
 
-            if (IsEnabled(nLogLevel)) {
-
-                if (formatter == null) {
+            if (IsEnabled(nLogLevel))
+            {
+                if (formatter == null)
+                {
                     throw new ArgumentNullException(nameof(formatter));
                 }
 
@@ -59,8 +66,10 @@ namespace Es.Extensions.Logging.NLog
             }
         }
 
-        private NLogger.LogLevel GetLogLevel(LogLevel logLevel) {
-            switch (logLevel) {
+        private NLogger.LogLevel GetLogLevel(LogLevel logLevel)
+        {
+            switch (logLevel)
+            {
                 case LogLevel.Trace: return NLogger.LogLevel.Trace;
                 case LogLevel.Debug: return NLogger.LogLevel.Debug;
                 case LogLevel.Information: return NLogger.LogLevel.Info;

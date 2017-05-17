@@ -3,9 +3,9 @@
   <PropertyGroup>
     <Description>NLog provider for Microsoft.Extensions.Logging</Description>
     <AssemblyTitle>Es.Extensions.Logging.NLog</AssemblyTitle>
-    <VersionPrefix>1.0.4</VersionPrefix>
+    <VersionPrefix>1.0.5</VersionPrefix>
     <Authors>v.la@live.cn</Authors>
-    <TargetFrameworks>netstandard1.3;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>portable</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -26,8 +26,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.2" />
     <PackageReference Include="NLog" Version="5.0.0-beta07" />
   </ItemGroup>
 

@@ -14,15 +14,16 @@ namespace Es.Extensions.Logging.NLog
         /// <summary>
         /// <see cref="NLogLoggerProvider"/> with default LogManager.
         /// </summary>
-        public NLogLoggerProvider() {
+        public NLogLoggerProvider()
+        {
         }
-
 
         /// <summary>
         /// <see cref="NLogLoggerProvider"/> with default LogFactory.
         /// </summary>
         /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
-        public NLogLoggerProvider(NLogger.LogFactory logFactory) {
+        public NLogLoggerProvider(NLogger.LogFactory logFactory)
+        {
             _factory = logFactory;
         }
 
@@ -31,8 +32,10 @@ namespace Es.Extensions.Logging.NLog
         /// </summary>
         /// <param name="name">Name of the logger to be created.</param>
         /// <returns>New Logger</returns>
-        public ILogger CreateLogger(string name) {
-            if (_factory == null) {
+        public ILogger CreateLogger(string name)
+        {
+            if (_factory == null)
+            {
                 //usage XmlLoggingConfiguration
                 //e.g LogManager.Configuration = new XmlLoggingConfiguration(fileName, true);
                 return new Logger(NLogger.LogManager.GetLogger(name));
@@ -43,8 +46,10 @@ namespace Es.Extensions.Logging.NLog
         /// <summary>
         /// Cleanup
         /// </summary>
-        public void Dispose() {
-            if (_factory != null && !_disposed) {
+        public void Dispose()
+        {
+            if (_factory != null && !_disposed)
+            {
                 _factory.Flush();
                 _factory.Dispose();
                 _disposed = true;
