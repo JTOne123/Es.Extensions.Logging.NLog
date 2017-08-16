@@ -15,10 +15,10 @@ namespace Microsoft.Extensions.Logging
         /// <summary>
         /// Enable NLog as logging provider in ASP.NET Core.
         /// </summary>
-        /// <param name="factory"></param>
+        /// <param name="factory"><see cref="ILoggerFactory"/></param>
         /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
         /// <returns></returns>
-        public static LoggerFactory AddNLog(this LoggerFactory factory, NLogger.LogFactory logFactory)
+        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory)
         {
             factory.AddProvider(new NLogLoggerProvider(logFactory));
             return factory;
@@ -27,9 +27,9 @@ namespace Microsoft.Extensions.Logging
         /// <summary>
         /// Enable NLog as logging provider in ASP.NET Core.
         /// </summary>
-        /// <param name="factory"></param>
+        /// <param name="factory"><see cref="ILoggerFactory"/></param>
         /// <returns></returns>
-        public static LoggerFactory AddNLog(this LoggerFactory factory)
+        public static ILoggerFactory AddNLog(this ILoggerFactory factory)
         {
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging")));
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Abstractions")));
@@ -53,9 +53,9 @@ namespace Microsoft.Extensions.Logging
         /// <summary>
         /// Apply NLog configuration from XML config.
         /// </summary>
-        /// <param name="factory"></param>
+        /// <param name="factory"><see cref="ILoggerFactory"/></param>
         /// <param name="fileName">NLog configuration file.</param>
-        public static NLogger.Config.LoggingConfiguration ConfigureNLog(this LoggerFactory factory, string fileName)
+        public static NLogger.Config.LoggingConfiguration ConfigureNLog(this ILoggerFactory factory, string fileName)
         {
             return ConfigureNLog(fileName);
         }
