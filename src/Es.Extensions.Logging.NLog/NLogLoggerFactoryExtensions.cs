@@ -17,10 +17,11 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="factory"><see cref="ILoggerFactory"/></param>
         /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
+        /// <param name="options"><see cref="NLogProviderOptions"/></param>
         /// <returns></returns>
-        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory)
+        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogger.LogFactory logFactory, NLogProviderOptions options = null)
         {
-            factory.AddProvider(new NLogLoggerProvider(logFactory));
+            factory.AddProvider(new NLogLoggerProvider(logFactory, options));
             return factory;
         }
 
@@ -28,8 +29,9 @@ namespace Microsoft.Extensions.Logging
         /// Enable NLog as logging provider in ASP.NET Core.
         /// </summary>
         /// <param name="factory"><see cref="ILoggerFactory"/></param>
+        /// <param name="options"><see cref="NLogProviderOptions"/></param>
         /// <returns></returns>
-        public static ILoggerFactory AddNLog(this ILoggerFactory factory)
+        public static ILoggerFactory AddNLog(this ILoggerFactory factory, NLogProviderOptions options = null)
         {
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging")));
             NLogger.LogManager.AddHiddenAssembly(Assembly.Load(new AssemblyName("Microsoft.Extensions.Logging.Abstractions")));
@@ -43,7 +45,7 @@ namespace Microsoft.Extensions.Logging
             }
             NLogger.LogManager.AddHiddenAssembly(typeof(Logger).GetTypeInfo().Assembly);
 
-            using (var provider = new NLogLoggerProvider())
+            using (var provider = new NLogLoggerProvider(options))
             {
                 factory.AddProvider(provider);
             }

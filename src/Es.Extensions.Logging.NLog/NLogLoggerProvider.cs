@@ -12,6 +12,11 @@ namespace Es.Extensions.Logging.NLog
         private bool _disposed = false;
 
         /// <summary>
+        /// NLog options
+        /// </summary>
+        public NLogProviderOptions Options { get; set; }
+
+        /// <summary>
         /// <see cref="NLogLoggerProvider"/> with default LogManager.
         /// </summary>
         public NLogLoggerProvider()
@@ -22,9 +27,20 @@ namespace Es.Extensions.Logging.NLog
         /// <see cref="NLogLoggerProvider"/> with default LogFactory.
         /// </summary>
         /// <param name="logFactory"><see cref="NLogger.LogFactory"/></param>
-        public NLogLoggerProvider(NLogger.LogFactory logFactory)
+        /// <param name="options"><see cref="NLogProviderOptions"/></param>
+        public NLogLoggerProvider(NLogger.LogFactory logFactory, NLogProviderOptions options)
         {
             _factory = logFactory;
+            Options = options;
+        }
+
+        /// <summary>
+        /// <see cref="NLogLoggerProvider"/> with default options.
+        /// </summary>
+        /// <param name="options"></param>
+        public NLogLoggerProvider(NLogProviderOptions options)
+        {
+            Options = options;
         }
 
         /// <summary>
@@ -38,9 +54,9 @@ namespace Es.Extensions.Logging.NLog
             {
                 //usage XmlLoggingConfiguration
                 //e.g LogManager.Configuration = new XmlLoggingConfiguration(fileName, true);
-                return new Logger(NLogger.LogManager.GetLogger(name));
+                return new Logger(NLogger.LogManager.GetLogger(name), Options);
             }
-            return new Logger(_factory.GetLogger(name));
+            return new Logger(_factory.GetLogger(name), Options);
         }
 
         /// <summary>

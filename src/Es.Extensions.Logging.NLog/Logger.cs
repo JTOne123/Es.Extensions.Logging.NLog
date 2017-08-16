@@ -8,14 +8,22 @@ namespace Es.Extensions.Logging.NLog
 {
     /// <summary>
     ///  Implement NLog's Logger in a Microsoft.Extensions.Logging's interface <see cref="Microsoft.Extensions.Logging.ILogger"/>.
+    ///  https://github.com/NLog/NLog.Extensions.Logging/blob/master/src/NLog.Extensions.Logging/NLogLogger.cs
     /// </summary>
     internal class Logger : ILogger
     {
         private NLogger.Logger _logger;
+        private readonly NLogProviderOptions _options;
 
-        public Logger(NLogger.Logger logger)
+        private static readonly object _emptyEventId = default(EventId);    // Cache boxing of empty EventId-struct
+        private static readonly object _zeroEventId = default(EventId).Id;  // Cache boxing of zero EventId-Value
+        private Tuple<string, string, string> _eventIdPropertyNames;
+
+
+        public Logger(NLogger.Logger logger, NLogProviderOptions options = null)
         {
             _logger = logger;
+            _options = options ?? NLogProviderOptions.Default;
         }
 
         public IDisposable BeginScope<TState>(TState state)
@@ -59,9 +67,25 @@ namespace Es.Extensions.Logging.NLog
                       exception,
                       CultureInfo.CurrentCulture,
                       message);
-                eventInfo.Properties["EventId.Id"] = eventId.Id;
-                eventInfo.Properties["EventId.Name"] = eventId.Name;
-                eventInfo.Properties["EventId"] = eventId;
+
+                if (!_options.IgnoreEmptyEventId || eventId.Id != 0 || !string.IsNullOrEmpty(eventId.Name))
+                {
+                    var eventIdPropertyNames = _eventIdPropertyNames ?? new Tuple<string, string, string>(null, null, null);
+                    var eventIdSeparator = _options.EventIdSeparator ?? string.Empty;
+                    if (!ReferenceEquals(eventIdPropertyNames.Item1, eventIdSeparator))
+                    {
+                        // Perform atomic cache update of the string-allocations matching the current separator
+                        eventIdPropertyNames = new Tuple<string, string, string>(
+                            eventIdSeparator,
+                            string.Concat("EventId", eventIdSeparator, "Id"),
+                            string.Concat("EventId", eventIdSeparator, "Name"));
+                        _eventIdPropertyNames = eventIdPropertyNames;
+                    }
+
+                    eventInfo.Properties[eventIdPropertyNames.Item2] = eventId.Id == 0 ? _zeroEventId : eventId.Id;
+                    eventInfo.Properties[eventIdPropertyNames.Item3] = eventId.Name;
+                    eventInfo.Properties["EventId"] = (eventId.Id == 0 && eventId.Name == null) ? _emptyEventId : eventId;
+                }
                 _logger.Log(eventInfo);
             }
         }
