@@ -4,7 +4,7 @@
     <Description>NLog provider for Microsoft.Extensions.Logging</Description>
     <AssemblyTitle>Es.Extensions.Logging.NLog</AssemblyTitle>
     <VersionPrefix>1.0.6</VersionPrefix>
-    <VersionSuffix>beta1</VersionSuffix>
+    <VersionSuffix>beta2</VersionSuffix>
     <Authors>v.la@live.cn</Authors>
     <TargetFrameworks>netstandard1.3;netstandard2.0;</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.0.0-beta09" />
+    <PackageReference Include="NLog" Version="5.0.0-beta10" />
   </ItemGroup>
 
 </Project>
