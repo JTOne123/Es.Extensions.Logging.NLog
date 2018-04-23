@@ -4,7 +4,7 @@
     <Description>NLog provider for Microsoft.Extensions.Logging</Description>
     <AssemblyTitle>Es.Extensions.Logging.NLog</AssemblyTitle>
     <VersionPrefix>1.0.6</VersionPrefix>
-    <VersionSuffix>beta3</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Authors>v.la@live.cn</Authors>
     <TargetFrameworks>netstandard1.3;netstandard2.0;</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -34,12 +34,12 @@
 
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.0.0-beta11" />
+    <PackageReference Include="NLog" Version="4.5.3" />
   </ItemGroup>
 
 </Project>
