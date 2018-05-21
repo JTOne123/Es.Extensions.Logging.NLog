@@ -22,7 +22,7 @@ namespace Sample
         {
             var filename = AppContext.BaseDirectory + "/nlog.xml";
 
-            logFactory.ConfigureNLog(filename);
+            NLog.LogManager.LoadConfiguration(filename);
 
             Console.WriteLine("Targets:" + NLog.LogManager.Configuration.AllTargets.Count);
 
@@ -52,6 +52,7 @@ namespace Sample
             LoggingRule rule1 = new LoggingRule("*", NLog.LogLevel.Trace, consoleTarget);
             config.LoggingRules.Add(rule1);
             LogFactory factory = new LogFactory(config);
+            
 
             logFactory.AddNLog(factory);
 
