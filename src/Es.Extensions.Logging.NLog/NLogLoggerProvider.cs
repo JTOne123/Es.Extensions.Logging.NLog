@@ -51,12 +51,11 @@ namespace Es.Extensions.Logging.NLog
         public ILogger CreateLogger(string name)
         {
             if (_factory == null)
-            {
-                //usage XmlLoggingConfiguration
-                //e.g LogManager.Configuration = new XmlLoggingConfiguration(fileName, true);
-                return new Logger(NLogger.LogManager.GetLogger(name), Options);
+            {                
+                return new NLogLogger(NLogger.LogManager.GetLogger(name), Options);
             }
-            return new Logger(_factory.GetLogger(name), Options);
+
+            return new NLogLogger(_factory.GetLogger(name), Options);
         }
 
         /// <summary>
