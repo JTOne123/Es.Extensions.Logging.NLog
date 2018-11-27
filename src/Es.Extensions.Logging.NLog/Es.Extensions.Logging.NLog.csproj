@@ -17,7 +17,6 @@
     <PackageId>Es.Extensions.Logging.NLog</PackageId>
     <PackageTags>logging;log;logger</PackageTags>
     <PackageProjectUrl>https://github.com/vla/Es.Extensions.Logging.NLog</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/vla/Es.Extensions.Logging.NLog/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>http://s.gravatar.com/avatar/28dfa5190889f7190e74b683fc30b827?s=80</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageLicenseType>MIT</PackageLicenseType>
